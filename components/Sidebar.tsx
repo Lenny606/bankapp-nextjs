@@ -4,6 +4,7 @@ import Image from "next/image";
 import {sidebarLinks} from '@/constants/index.ts';
 import {cn} from "@/lib/utils";
 import {usePathname} from "next/navigation";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export const Sidebar = ({user}: SiderbarProps) => {
 
@@ -22,7 +23,7 @@ export const Sidebar = ({user}: SiderbarProps) => {
                         alt={"logo"}
                         className={'size-[24px] max-xl:size-14'}/>
                     <h1 className={'sidebar-logo'}>
-                        My Bank
+                        {process.env.NEXT_PUBLIC_APP_NAME}
                     </h1>
                 </Link>
                 {
