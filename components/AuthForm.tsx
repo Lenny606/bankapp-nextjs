@@ -3,9 +3,40 @@ import React, {useState} from 'react'
 import Image from "next/image";
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 import Link from "next/link";
+import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Button} from "@/components/ui/button"
+import {CustomInput} from "@/components/CustomInput"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import {Input} from "@/components/ui/input"
+import {authFormSchema} from "@/lib/utils";
 
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
+    // FORM COMPONENT
+    const form = useForm<z.infer<typeof authFormSchema>>({
+        resolver: zodResolver(authFormSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    })
+
+    function onSubmit(values: z.infer<typeof authFormSchema>) {
+        // Do something with the form values.
+        // ✅ This will be type-safe and validated.
+        console.log(values)
+    }
+
     return (
         <section className={'auth-form'}>
             <header className={'flex flex-col gap-5 md:gap-8'}>
@@ -41,9 +72,33 @@ const AuthForm = ({type}: { type: string }) => {
                         {/*{PLAIDLINK}*/}
                     </div>
                 ) : (
-                    <>
-                    FORM
-                    </>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            {/*<FormField*/}
+                            {/*    control={form.control}*/}
+                            {/*    name="email"*/}
+                            {/*    render={({field}) => (*/}
+                            {/*        <div className={'form-item'}>*/}
+                            {/*            <FormLabel className={'form-label'}>*/}
+                            {/*                Email*/}
+                            {/*            </FormLabel>*/}
+                            {/*            <div className={'flex w-full'}>*/}
+                            {/*                <FormControl>*/}
+                            {/*                    <Input placeholder={'Email'}*/}
+                            {/*                           className={'input-class'}*/}
+                            {/*                           {...field}*/}
+                            {/*                    />*/}
+                            {/*                </FormControl>*/}
+                            {/*                <FormMessage className={'form-message'} ></FormMessage>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    )}*/}
+                            {/*/>*/}
+                            <CustomInput type={'email'} label={"Email"} placeholder={'enter email'} control={form.control} />
+                            <CustomInput type={'password'} label={"Password"} placeholder={'enter password'} control={form.control} />
+                            <Button type="submit">Submit</Button>
+                        </form>
+                    </Form>
                 )
             }
         </section>

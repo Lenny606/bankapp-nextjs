@@ -7,4 +7,6 @@
 - npm i countup.js
 - npm i chart.js
 - npm i react-chartjs-2
-
+```shell
+npx shadcnui@latest add form
+```
