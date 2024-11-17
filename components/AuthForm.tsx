@@ -94,8 +94,8 @@ const AuthForm = ({type}: { type: string }) => {
                             {/*        </div>*/}
                             {/*    )}*/}
                             {/*/>*/}
-                            <CustomInput type={'email'} label={"Email"} placeholder={'enter email'} control={form.control} />
-                            <CustomInput type={'password'} label={"Password"} placeholder={'enter password'} control={form.control} />
+                            <CustomInput name={'email'} label={"Email"} placeholder={'enter email'} control={form.control} />
+                            <CustomInput name={'password'} label={"Password"} placeholder={'enter password'} control={form.control} />
                             <Button type="submit">Submit</Button>
                         </form>
                     </Form>

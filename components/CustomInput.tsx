@@ -7,17 +7,17 @@ import {z} from "zod";
 import {authFormSchema} from "@/lib/utils";
 
 interface CustomInput {
-    type: FieldPath<z.infer<typeof authFormSchema>>
+    name: FieldPath<z.infer<typeof authFormSchema>>
     label: string;
     placeholder: string;
     control: Control<z.infer<typeof authFormSchema>>
 }
 
-export const CustomInput = ({type, label, placeholder, control} : CustomInput) => {
+export const CustomInput = ({name, label, placeholder, control}: CustomInput) => {
     return (
         <FormField
             control={control}
-            name={type}
+            name={name}
             render={({field}) => (
                 <div className={'form-item'}>
                     <FormLabel className={'form-label'}>
@@ -27,6 +27,7 @@ export const CustomInput = ({type, label, placeholder, control} : CustomInput) =
                         <FormControl>
                             <Input placeholder={placeholder}
                                    className={'input-class'}
+                                   type={name === 'password' ? name : 'text'}
                                    {...field}
                             />
                         </FormControl>
