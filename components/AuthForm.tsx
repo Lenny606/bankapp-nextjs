@@ -15,6 +15,8 @@ import {authFormSchema, getPathLink} from "@/lib/utils";
 import {Loader2} from "lucide-react";
 import GlobalVariables from "@/app/app.config"
 import {useRouter} from "next/navigation";
+import {signUp} from "@/lib/actions/user.actions";
+import {signIn} from "@/lib/actions/user.actions";
 
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
@@ -43,21 +45,21 @@ const AuthForm = ({type}: { type: string }) => {
         setIsLoading(true)
         try {
             //signup
-            // if (type === GlobalVariables.PATH_NAME.SIGN_UP) {
-            //     const newUser = await signUp(values)
-            //     setUser(newUser)
-            // }
+            if (type === GlobalVariables.PATH_NAME.SIGN_UP) {
+                const newUser = await signUp(values)
+                setUser(newUser)
+            }
 
             //sign in
             if (type === GlobalVariables.PATH_NAME.SIGN_IN) {
-                // const user = await signIn({
-                //     email: values.email,
-                //     password: values.password
-                // })
-                //
-                // if (user) {
-                //     router.push(getPathLink(GlobalVariables.PATH_NAME.HOMEPAGE))
-                // }
+                const user = await signIn({
+                    email: values.email,
+                    password: values.password
+                })
+
+                if (user) {
+                    router.push(getPathLink(GlobalVariables.PATH_NAME.HOMEPAGE))
+                }
             }
 
 
