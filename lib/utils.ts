@@ -3,6 +3,7 @@ import {type ClassValue, clsx} from "clsx";
 import qs from "query-string";
 import {twMerge} from "tailwind-merge";
 import {z} from "zod";
+import GlobalVariables from "@/app/app.config"
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -195,15 +196,23 @@ export const getTransactionStatus = (date: Date) => {
     return date > twoDaysAgo ? "Processing" : "Success";
 };
 
-export const authFormSchema = z.object({
-    email: z.string().email({
+export const authFormSchema = (type: string) => z.object({
+    //signup
+    firstName: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
+    lastName: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
+    address1: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().max(50),
+    state: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(2).max(5),
+    zipCode: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
+    dateOfBirth: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
+    ssn: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
+    //both
+    email: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().email({
         message: "Email is invalid"
     }).max(50),
     password: z.string().min(8, {message: "min chars are 8"}),
-    username: z.string().min(8, {message: "min chars are 8"})
-
+    // username: z.string().min(8, {message: "min chars are 8"}),
 })
 
-export function getPathLink(pathName) {
+export function getPathLink(pathName : string) {
     return "/" + pathName
 }

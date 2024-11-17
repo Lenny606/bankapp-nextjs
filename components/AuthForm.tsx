@@ -9,13 +9,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui/button"
 import {CustomInput} from "@/components/CustomInput"
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+    Form
 } from "@/components/ui/form"
 import {authFormSchema, getPathLink} from "@/lib/utils";
 import {Loader2} from "lucide-react";
@@ -24,16 +18,25 @@ import GlobalVariables from "@/app/app.config"
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const formSchema = authFormSchema(type)
     // FORM COMPONENT
-    const form = useForm<z.infer<typeof authFormSchema>>({
-        resolver: zodResolver(authFormSchema),
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             password: "",
+            firstName: "",
+            lastName: "",
+            address1: "",
+            state: "",
+            zipCode: "",
+            dateOfBirth: "",
+            ssn: ""
         },
     })
 
-    function onSubmit(values: z.infer<typeof authFormSchema>) {
+    function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
@@ -82,26 +85,39 @@ const AuthForm = ({type}: { type: string }) => {
                     <>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                                {/*<FormField*/}
-                                {/*    control={form.control}*/}
-                                {/*    name="email"*/}
-                                {/*    render={({field}) => (*/}
-                                {/*        <div className={'form-item'}>*/}
-                                {/*            <FormLabel className={'form-label'}>*/}
-                                {/*                Email*/}
-                                {/*            </FormLabel>*/}
-                                {/*            <div className={'flex w-full'}>*/}
-                                {/*                <FormControl>*/}
-                                {/*                    <Input placeholder={'Email'}*/}
-                                {/*                           className={'input-class'}*/}
-                                {/*                           {...field}*/}
-                                {/*                    />*/}
-                                {/*                </FormControl>*/}
-                                {/*                <FormMessage className={'form-message'} ></FormMessage>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-                                {/*    )}*/}
-                                {/*/>*/}
+                                {
+                                    //     INPUTS ONLY FOR SIGN UP
+                                    type === GlobalVariables.PATH_NAME.SIGN_UP && (
+                                        <>
+                                            <div className={'flex justify-between gap-4 '}>
+                                                <CustomInput name={'firstName'} label={'First Name'} placeholder={'John'}
+                                                             control={form.control} />
+                                                <CustomInput name={'lastName'} label={'Last Name'} placeholder={'Dow'}
+                                                             control={form.control}/>
+                                            </div>
+                                            <CustomInput name={'address1'} label={'Address'}
+                                                         placeholder={'Enter your address'}
+                                                         control={form.control}/>
+                                            <div className={'flex justify-between gap-4'}>
+                                                <CustomInput name={'state'} label={'State'} placeholder={'CZ'}
+                                                             control={form.control}/>
+                                                <CustomInput name={'zipCode'} label={'Zip Code'} placeholder={'11000'}
+                                                             control={form.control}/>
+                                            </div>
+                                            <div className={'flex justify-between gap-4'}>
+
+                                                <CustomInput name={'dateOfBirth'} label={'Birth Date'}
+                                                             placeholder={'1.1.2000'}
+                                                             control={form.control}/>
+                                                <CustomInput name={'ssn'} label={'SSN'} placeholder={'1234'}
+                                                             control={form.control}/>
+                                            </div>
+
+                                        </>
+                                    )
+
+                                }
+
                                 <CustomInput name={'email'} label={"Email"} placeholder={'enter email'}
                                              control={form.control}/>
                                 <CustomInput name={'password'} label={"Password"} placeholder={'enter password'}

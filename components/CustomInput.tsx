@@ -5,12 +5,15 @@ import React from "react";
 import {Control, FieldPath} from "react-hook-form";
 import {z} from "zod";
 import {authFormSchema} from "@/lib/utils";
+import GlobalVariables from "@/app/app.config"
+
+const formSchema = authFormSchema(GlobalVariables.PATH_NAME.SIGN_UP)
 
 interface CustomInput {
-    name: FieldPath<z.infer<typeof authFormSchema>>
+    name: FieldPath<z.infer<typeof formSchema>>
     label: string;
     placeholder: string;
-    control: Control<z.infer<typeof authFormSchema>>
+    control: Control<z.infer<typeof formSchema>>
 }
 
 export const CustomInput = ({name, label, placeholder, control}: CustomInput) => {
