@@ -201,6 +201,7 @@ export const authFormSchema = (type: string) => z.object({
     firstName: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
     lastName: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
     address1: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().max(50),
+    city: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().max(20),
     state: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(2).max(5),
     zipCode: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),
     dateOfBirth: type === GlobalVariables.PATH_NAME.SIGN_IN ? z.string().optional() : z.string().min(3),

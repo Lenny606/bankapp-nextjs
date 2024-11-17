@@ -14,10 +14,12 @@ import {
 import {authFormSchema, getPathLink} from "@/lib/utils";
 import {Loader2} from "lucide-react";
 import GlobalVariables from "@/app/app.config"
+import {useRouter} from "next/navigation";
 
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const formSchema = authFormSchema(type)
     // FORM COMPONENT
@@ -29,6 +31,7 @@ const AuthForm = ({type}: { type: string }) => {
             firstName: "",
             lastName: "",
             address1: "",
+            city: "",
             state: "",
             zipCode: "",
             dateOfBirth: "",
@@ -36,12 +39,34 @@ const AuthForm = ({type}: { type: string }) => {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-        setIsLoading(false)
+        try {
+            //signup
+            // if (type === GlobalVariables.PATH_NAME.SIGN_UP) {
+            //     const newUser = await signUp(values)
+            //     setUser(newUser)
+            // }
+
+            //sign in
+            if (type === GlobalVariables.PATH_NAME.SIGN_IN) {
+                // const user = await signIn({
+                //     email: values.email,
+                //     password: values.password
+                // })
+                //
+                // if (user) {
+                //     router.push(getPathLink(GlobalVariables.PATH_NAME.HOMEPAGE))
+                // }
+            }
+
+
+        } catch (e) {
+            console.error(e)
+        } finally {
+            setIsLoading(false)
+
+        }
     }
 
     return (
@@ -91,12 +116,15 @@ const AuthForm = ({type}: { type: string }) => {
                                         <>
                                             <div className={'flex justify-between gap-4 '}>
                                                 <CustomInput name={'firstName'} label={'First Name'} placeholder={'John'}
-                                                             control={form.control} />
+                                                             control={form.control}/>
                                                 <CustomInput name={'lastName'} label={'Last Name'} placeholder={'Dow'}
                                                              control={form.control}/>
                                             </div>
                                             <CustomInput name={'address1'} label={'Address'}
                                                          placeholder={'Enter your address'}
+                                                         control={form.control}/>
+                                            <CustomInput name={'city'} label={'City'}
+                                                         placeholder={'Enter your city'}
                                                          control={form.control}/>
                                             <div className={'flex justify-between gap-4'}>
                                                 <CustomInput name={'state'} label={'State'} placeholder={'CZ'}

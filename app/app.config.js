@@ -1,7 +1,8 @@
 module.exports = {
     PATH_NAME: {
         SIGN_IN: 'sign-in',
-        SIGN_UP: 'sign-up'
+        SIGN_UP: 'sign-up',
+        HOMEPAGE: ""
     },
     LABELS: {
         SIGN_IN: 'Sign In',
