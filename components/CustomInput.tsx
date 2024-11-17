@@ -23,7 +23,7 @@ export const CustomInput = ({name, label, placeholder, control}: CustomInput) =>
                     <FormLabel className={'form-label'}>
                         {label}
                     </FormLabel>
-                    <div className={'flex w-full'}>
+                    <div className={'flex flex-col w-full'}>
                         <FormControl>
                             <Input placeholder={placeholder}
                                    className={'input-class'}
@@ -31,7 +31,7 @@ export const CustomInput = ({name, label, placeholder, control}: CustomInput) =>
                                    {...field}
                             />
                         </FormControl>
-                        <FormMessage className={'form-message'}></FormMessage>
+                        <FormMessage className={'form-message mt-2'}></FormMessage>
                     </div>
                 </div>
             )}
