@@ -1,4 +1,5 @@
 "use client"
+
 import React, {useState} from 'react'
 import Image from "next/image";
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
@@ -15,13 +16,13 @@ import {authFormSchema, getPathLink} from "@/lib/utils";
 import {Loader2} from "lucide-react";
 import GlobalVariables from "@/app/app.config"
 import {useRouter} from "next/navigation";
-import {signUp} from "@/lib/actions/user.actions";
-import {signIn} from "@/lib/actions/user.actions";
+import {getLoggedInUser, signUp, signIn} from "@/lib/actions/user.actions";
 
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+
 
     const formSchema = authFormSchema(type)
     // FORM COMPONENT
@@ -44,7 +45,7 @@ const AuthForm = ({type}: { type: string }) => {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
         try {
-            //signup
+            //signup with Appwrite
             if (type === GlobalVariables.PATH_NAME.SIGN_UP) {
                 const newUser = await signUp(values)
                 setUser(newUser)
@@ -55,7 +56,7 @@ const AuthForm = ({type}: { type: string }) => {
                 const user = await signIn({
                     email: values.email,
                     password: values.password
-                })
+                } as signInProps)
 
                 if (user) {
                     router.push(getPathLink(GlobalVariables.PATH_NAME.HOMEPAGE))
@@ -89,7 +90,7 @@ const AuthForm = ({type}: { type: string }) => {
                 </Link>
                 <div className={'flex flex-col gap-1 md:gap-3 '}>
                     <h1 className={'text-24 lg:text-36 font-semibold text-gray-900'}>
-                        {user ? "Link ac>count"
+                        {user ? "Link account"
                             : type === GlobalVariables.PATH_NAME.SIGN_IN
                                 ? GlobalVariables.LABELS.SIGN_IN
                                 : GlobalVariables.LABELS.SIGN_UP

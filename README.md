@@ -7,6 +7,9 @@
 - npm i countup.js
 - npm i chart.js
 - npm i react-chartjs-2
+- npm i node-appwrite
 ```shell
 npx shadcnui@latest add form
 ```
+### Docs
+https://appwrite.io/docs/tutorials/nextjs-ssr-auth/step-1
