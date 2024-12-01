@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Button} from "@/components/ui/button";
 import {PlaidLinkOnSuccess, PlaidLinkOptions, usePlaidLink} from "react-plaid-link";
 import {useRouter} from "next/navigation";
+import {createLinkToken} from "@/lib/actions/user.actions";
 
 const PlaidLink = ({user, variant}: PlaidLinkProps) => {
 
@@ -10,7 +11,7 @@ const PlaidLink = ({user, variant}: PlaidLinkProps) => {
 //config object
     useEffect(() => {
         const getLinkToken = async () => {
-            const data = await createLinkTonken(user) //server action
+            const data = await createLinkToken(user) //server action
             setToken(data?.linkToken)
         }
         getLinkToken()

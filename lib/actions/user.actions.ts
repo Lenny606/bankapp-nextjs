@@ -4,8 +4,10 @@ import {createAdminClient, createSessionClient} from "@/lib/appwrite";
 import {ID} from "node-appwrite";
 import {cookies} from "next/headers";
 import {parseStringify} from "@/lib/utils";
+import {CountryCode, Products} from "plaid";
+import {plaidClient} from "@/lib/plaid";
 
-export const signIn = async ({email, password} : signInProps) => {
+export const signIn = async ({email, password}: signInProps) => {
     try {
         const {account} = await createAdminClient();
         const response = await account.createEmailPasswordSession(email, password)
@@ -28,7 +30,7 @@ export const signUp = async (userData: SignUpParams) => {
         const session = await account.createEmailPasswordSession(email, password);
 
         //TODO fix sessions
-         await cookies().set("appwrite-session", session.secret, {
+        await cookies().set("appwrite-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -52,6 +54,7 @@ export async function getLoggedInUser() {
         return null;
     }
 }
+
 export async function logout() {
     try {
         const {account} = await createSessionClient();
@@ -61,5 +64,28 @@ export async function logout() {
         console.error(error)
         return null;
     }
+}
+
+export async function createLinkToken(user: User) {
+    try {
+        //plaid specific setup
+        const tokenParams = {
+            user: {
+                client_user_id: user.$id
+            },
+            client_name: user.name,
+            products: ['auth'] as Products[],
+            language: 'en',
+            country_codes: ['US'] as CountryCode[]
+        }
+
+        const res = await plaidClient.linkTokenCreate(tokenParams)
+        return parseStringify({linkToken: res.data.link_token})
+    } catch (error) {
+        console.error(error)
+    }
+}
+export async function exchangePublicToken(user: User) {
+
 }
 
