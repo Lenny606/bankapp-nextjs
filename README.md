@@ -8,6 +8,8 @@
 - npm i chart.js
 - npm i react-chartjs-2
 - npm i node-appwrite
+- npm i plaid
+- npm i react-plaid-link
 ```shell
 npx shadcnui@latest add form
 ```
