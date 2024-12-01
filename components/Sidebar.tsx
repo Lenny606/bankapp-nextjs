@@ -5,6 +5,7 @@ import {sidebarLinks} from '@/constants/index.ts';
 import {cn} from "@/lib/utils";
 import {usePathname} from "next/navigation";
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
+import {Footer} from "@/components/Footer";
 
 export const Sidebar = ({user}: SiderbarProps) => {
 
@@ -57,7 +58,7 @@ export const Sidebar = ({user}: SiderbarProps) => {
                 }
                 USER
             </nav>
-            FOOTER
+            <Footer user={user}/>
         </section>
     )
 }

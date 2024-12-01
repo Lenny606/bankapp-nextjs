@@ -1,8 +1,9 @@
+'use client'
 import Link from "next/link";
 import {formatAmount} from "@/lib/utils";
 import Image from "next/image";
 
-export const BankCard = ({key, account, username, showBalance}: CreditCardProps) => {
+export const BankCard = ({key, account, userName, showBalance}: CreditCardProps) => {
 
 
     return (
@@ -11,7 +12,7 @@ export const BankCard = ({key, account, username, showBalance}: CreditCardProps)
                 <div className={'bank-card_content'}>
                     <div>
                         <h1 className={'font-semibold text-white text-16'}>
-                            {account.name || username}
+                            {userName}
                         </h1>
                         <p className={'font-ibm-plex-serif font-black text-white'}>
                             {formatAmount(account.currentBalance)}
@@ -20,7 +21,7 @@ export const BankCard = ({key, account, username, showBalance}: CreditCardProps)
                     <article className={'flex flex-col gap-2'}>
                         <div className={'flex justify-between'}>
                             <h1 className={'font-semibold text-white text-12'}>
-                                {username}
+                                {userName}
                             </h1>
                             <h2 className={'font-semibold text-white text-12'}>
                                 ●● / ●●

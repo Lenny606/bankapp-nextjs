@@ -10,6 +10,7 @@ import {sidebarLinks} from "@/constants";
 import {cn} from "@/lib/utils";
 import {usePathname} from "next/navigation";
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
+import {Footer} from "@/components/Footer";
 
 
 export const MobileNavBar = ({user}: MobileNavProps) => {
@@ -64,7 +65,7 @@ export const MobileNavBar = ({user}: MobileNavProps) => {
                             USEr
                         </nav>
                     </SheetClose>
-                    FOOTER
+                    <Footer user={user} type={'mobile'}/>
                     <Link href={'/'}
                           className={'flex cursor-pointer items-center gap-1 px-4'}
                     >

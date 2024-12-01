@@ -27,7 +27,8 @@ export const signUp = async (userData: SignUpParams) => {
         const newUserAccount = await account.create(ID.unique(), email, password, name);
         const session = await account.createEmailPasswordSession(email, password);
 
-        (await cookies()).set("appwrite-session", session.secret, {
+        //TODO fix sessions
+         await cookies().set("appwrite-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -44,7 +45,18 @@ export async function getLoggedInUser() {
         const {account} = await createSessionClient();
         //uses workaround to pass object
         const user = await account.get();
+        console.log(user)
         return parseStringify(user)
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
+}
+export async function logout() {
+    try {
+        const {account} = await createSessionClient();
+        (await cookies()).delete('appwrite-session')
+        await account.deleteSession('current')
     } catch (error) {
         console.error(error)
         return null;

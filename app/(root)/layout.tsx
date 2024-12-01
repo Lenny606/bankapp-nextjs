@@ -1,18 +1,20 @@
-'use client'
 import {Sidebar} from "@/components/Sidebar";
 import Image from 'next/image'
 import {MobileNavBar} from "@/components/MobileNavBar";
+import {getLoggedInUser} from "@/lib/actions/user.actions";
+import {redirect} from "next/navigation";
 
 //layout only for these nested routes
-export default function RootLayout({children,}: Readonly<{
+export default async function RootLayout({children,}: Readonly<{
     children: React.ReactNode;
 }>) {
 
     //send user into sidebar
-    const loggedIn = {
-        firstName: "Tomas",
-        lastName: "Kravcik",
+    const loggedIn = await getLoggedInUser()
+    if (!loggedIn) {
+        redirect("/sign-in")
     }
+
     return (
         <main className={'flex w-full h-screen font-inter'}>
             <Sidebar user={loggedIn}/>

@@ -16,7 +16,7 @@ import {authFormSchema, getPathLink} from "@/lib/utils";
 import {Loader2} from "lucide-react";
 import GlobalVariables from "@/app/app.config"
 import {useRouter} from "next/navigation";
-import {getLoggedInUser, signUp, signIn} from "@/lib/actions/user.actions";
+import {signUp, signIn} from "@/lib/actions/user.actions";
 
 const AuthForm = ({type}: { type: string }) => {
     const [user, setUser] = useState(null)
