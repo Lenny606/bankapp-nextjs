@@ -47,8 +47,21 @@ const AuthForm = ({type}: { type: string }) => {
         setIsLoading(true)
         try {
             //signup with Appwrite
+            const userData = {
+                firstName: values.firstName!,
+                lastName: values.lastName!,
+                address1: values.address1!,
+                city: values.city!,
+                state: values.state!,
+                zipCode: values.zipCode!,
+                dateOfBirth: values.dateOfBirth!,
+                ssn: values.ssn!,
+                email: values.email,
+                password: values.password
+            }
+
             if (type === GlobalVariables.PATH_NAME.SIGN_UP) {
-                const newUser = await signUp(values)
+                const newUser = await signUp(userData)
                 setUser(newUser)
             }
 
